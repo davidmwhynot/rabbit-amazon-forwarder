@@ -2,6 +2,8 @@ package lambda
 
 import (
 	"errors"
+	"os"
+
 	"github.com/AirHelp/rabbit-amazon-forwarder/config"
 	"github.com/AirHelp/rabbit-amazon-forwarder/forwarder"
 	"github.com/aws/aws-sdk-go/aws"
@@ -29,7 +31,10 @@ func CreateForwarder(entry config.AmazonEntry, lambdaClient ...lambdaiface.Lambd
 	if len(lambdaClient) > 0 {
 		client = lambdaClient[0]
 	} else {
-		client = lambda.New(session.Must(session.NewSession()))
+		client = lambda.New(session.Must(session.NewSession()), &aws.Config{
+			Endpoint:   aws.String(os.Getenv(config.LambdaEndpoint)),
+			DisableSSL: aws.Bool(os.Getenv(config.LambdaDisableSSL) == "true"),
+		})
 	}
 	forwarder := Forwarder{entry.Name, client, entry.Target}
 	log.WithField("forwarderName", forwarder.Name()).Info("Created forwarder")

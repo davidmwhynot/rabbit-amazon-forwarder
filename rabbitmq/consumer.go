@@ -1,6 +1,7 @@
 package rabbitmq
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"time"
@@ -168,11 +169,20 @@ func (c Consumer) startForwarding(params *workerParams) error {
 			log.WithFields(log.Fields{
 				"consumerName": c.Name(),
 				"messageID":    d.MessageId}).Info("Message to forward")
-			err := params.forwarder.Push(string(d.Body))
+
+			formattedDelivery := struct {
+				amqp.Delivery
+				Body string
+			}{
+				Delivery: d,
+				Body:     string(d.Body),
+			}
+
+			data, err := json.Marshal(formattedDelivery)
 			if err != nil {
 				log.WithFields(log.Fields{
 					"forwarderName": forwarderName,
-					"error":         err.Error()}).Error("Could not forward message")
+					"error":         err.Error()}).Error("Could not parse message")
 				if err = d.Reject(false); err != nil {
 					log.WithFields(log.Fields{
 						"forwarderName": forwarderName,
@@ -181,12 +191,26 @@ func (c Consumer) startForwarding(params *workerParams) error {
 				}
 
 			} else {
-				if err := d.Ack(true); err != nil {
+				err = params.forwarder.Push(string(data))
+				if err != nil {
 					log.WithFields(log.Fields{
 						"forwarderName": forwarderName,
-						"error":         err.Error(),
-						"messageID":     d.MessageId}).Error("Could not ack message")
-					return err
+						"error":         err.Error()}).Error("Could not forward message")
+					if err = d.Reject(false); err != nil {
+						log.WithFields(log.Fields{
+							"forwarderName": forwarderName,
+							"error":         err.Error()}).Error("Could not reject message")
+						return err
+					}
+
+				} else {
+					if err := d.Ack(true); err != nil {
+						log.WithFields(log.Fields{
+							"forwarderName": forwarderName,
+							"error":         err.Error(),
+							"messageID":     d.MessageId}).Error("Could not ack message")
+						return err
+					}
 				}
 			}
 		case <-params.check:

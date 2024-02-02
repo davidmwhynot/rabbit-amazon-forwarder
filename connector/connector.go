@@ -5,7 +5,6 @@ import (
 	"crypto/x509"
 	"io/ioutil"
 	"os"
-	"strings"
 
 	"github.com/AirHelp/rabbit-amazon-forwarder/config"
 	log "github.com/sirupsen/logrus"
@@ -106,7 +105,7 @@ func (c *TlsRabbitConnector) CreateConnection(connectionURL string) (*amqp.Conne
 
 	certFilePath := os.Getenv(config.CertFile)
 	keyFilePath := os.Getenv(config.KeyFile)
-	if _, err := c.KeyLoader.LoadKeyPair(certFilePath, keyFilePath); err == nil {
+	if cert, err := c.KeyLoader.LoadKeyPair(certFilePath, keyFilePath); err == nil {
 		c.TlsConfig.Certificates = append(c.TlsConfig.Certificates, cert)
 	} else {
 		log.WithFields(log.Fields{
@@ -134,9 +133,11 @@ func CreateTlsRabbitConnector() *TlsRabbitConnector {
 }
 
 func CreateConnector(connectionURL string) RabbitConnector {
-	if strings.HasPrefix(connectionURL, "amqps") {
+	if caCertFilePath := os.Getenv(config.CaCertFile); caCertFilePath != "" {
+		log.Info("Dialing in via mTLS")
 		return CreateTlsRabbitConnector()
 	} else {
+		log.Info("Dialing in w/o mTLS")
 		return CreateBasicRabbitConnector()
 	}
 }
