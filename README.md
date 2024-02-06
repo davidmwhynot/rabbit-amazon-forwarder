@@ -1,6 +1,6 @@
 # RabbitMQ -> Amazon forwarder
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/AirHelp/rabbit-amazon-forwarder)](https://goreportcard.com/report/github.com/AirHelp/rabbit-amazon-forwarder)
+[![Go Report Card](https://goreportcard.com/badge/github.com/davidmwhynot/rabbit-amazon-forwarder)](https://goreportcard.com/report/github.com/davidmwhynot/rabbit-amazon-forwarder)
 
 Application to forward messages from RabbitMQ to different Amazon services.
 
@@ -24,7 +24,7 @@ The list of RabbitMQ sources and corresponding AWS target resources are stored i
 
 ### Mapping file
 
-Sample of RabbitMQ -> SNS mapping file. All fields are required. Samples are located in [examples](https://github.com/AirHelp/rabbit-amazon-forwarder/tree/master/examples) directory.
+Sample of RabbitMQ -> SNS mapping file. All fields are required. Samples are located in [examples](https://github.com/davidmwhynot/rabbit-amazon-forwarder/tree/master/examples) directory.
 ```json
 [
   {
@@ -90,7 +90,7 @@ docker run \
 -e MAPPING_FILE=/config/mapping.json \
 -v $MAPPING_FILE:/config/mapping.json \
 -p 8080:8080 \
-airhelp/rabbit-amazon-forwarder
+davidmwhynot/rabbit-amazon-forwarder
 ```
 
 Using docker-compose:
@@ -108,8 +108,8 @@ docker-compose run --rm tests
 
 ```bash
 make push
-docker tag airhelp/rabbit-amazon-forwarder airhelp/rabbit-amazon-forwarder:$VERSION
-docker push airhelp/rabbit-amazon-forwarder:$VERSION
+docker tag davidmwhynot/rabbit-amazon-forwarder davidmwhynot/rabbit-amazon-forwarder:$VERSION
+docker push davidmwhynot/rabbit-amazon-forwarder:$VERSION
 ```
 
 ## Supervisor

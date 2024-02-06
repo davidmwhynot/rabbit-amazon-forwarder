@@ -4,12 +4,12 @@ import (
 	"errors"
 	"os"
 
-	"github.com/AirHelp/rabbit-amazon-forwarder/config"
-	"github.com/AirHelp/rabbit-amazon-forwarder/forwarder"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/lambda"
 	"github.com/aws/aws-sdk-go/service/lambda/lambdaiface"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/config"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/forwarder"
 	log "github.com/sirupsen/logrus"
 )
 

@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/AirHelp/rabbit-amazon-forwarder/config"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/config"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/streadway/amqp"

@@ -1,8 +1,8 @@
 build:
-	docker build -t flex/rabbit-amazon-forwarder -f Dockerfile .
+	docker build -t davidmwhynot/rabbit-amazon-forwarder -f Dockerfile .
 
 push: test build
-	docker push flex/rabbit-amazon-forwarder
+	docker push davidmwhynot/rabbit-amazon-forwarder
 
 test:
 	docker-compose run --rm tests

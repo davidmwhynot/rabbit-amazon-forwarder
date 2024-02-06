@@ -5,13 +5,13 @@ import (
 	"os"
 	"testing"
 
-	"github.com/AirHelp/rabbit-amazon-forwarder/config"
-	"github.com/AirHelp/rabbit-amazon-forwarder/consumer"
-	"github.com/AirHelp/rabbit-amazon-forwarder/forwarder"
-	"github.com/AirHelp/rabbit-amazon-forwarder/lambda"
-	"github.com/AirHelp/rabbit-amazon-forwarder/rabbitmq"
-	"github.com/AirHelp/rabbit-amazon-forwarder/sns"
-	"github.com/AirHelp/rabbit-amazon-forwarder/sqs"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/config"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/consumer"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/forwarder"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/lambda"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/rabbitmq"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/sns"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/sqs"
 )
 
 const (

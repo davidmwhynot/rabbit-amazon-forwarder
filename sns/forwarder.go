@@ -2,14 +2,15 @@ package sns
 
 import (
 	"errors"
+
 	log "github.com/sirupsen/logrus"
 
-	"github.com/AirHelp/rabbit-amazon-forwarder/config"
-	"github.com/AirHelp/rabbit-amazon-forwarder/forwarder"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sns"
 	"github.com/aws/aws-sdk-go/service/sns/snsiface"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/config"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/forwarder"
 )
 
 const (

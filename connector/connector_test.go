@@ -6,8 +6,8 @@ import (
 	"errors"
 	"os"
 
-	"github.com/AirHelp/rabbit-amazon-forwarder/config"
-	"github.com/AirHelp/rabbit-amazon-forwarder/connector"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/config"
+	"github.com/davidmwhynot/rabbit-amazon-forwarder/connector"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/streadway/amqp"
