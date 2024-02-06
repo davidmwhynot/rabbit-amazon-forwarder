@@ -31,8 +31,22 @@ var _ = Describe("Connector", func() {
 		})
 
 		Context("With a tls rabbit configuration", func() {
-			It("should be a TlsRabbitConnector", func() {
+			It("should be a BasicRabbitConnector", func() {
 				actualConnect := connector.CreateConnector("amqps")
+				Expect(actualConnect).Should(BeAssignableToTypeOf(&connector.BasicRabbitConnector{}))
+			})
+		})
+
+		Context("With a mutual tls rabbit configuration", func() {
+			It("should be a TlsRabbitConnector", func() {
+				old := os.Getenv(config.CaCertFile)
+
+				os.Setenv(config.CaCertFile, "/certs/ca_certificate.pem")
+
+				actualConnect := connector.CreateConnector("amqps")
+
+				os.Setenv(config.CaCertFile, old)
+
 				Expect(actualConnect).Should(BeAssignableToTypeOf(&connector.TlsRabbitConnector{}))
 			})
 		})

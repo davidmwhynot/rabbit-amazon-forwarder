@@ -5,7 +5,7 @@ push: test build
 	docker push davidmwhynot/rabbit-amazon-forwarder
 
 test:
-	docker-compose run --rm tests
+	docker-compose run --rm --build tests
 
 dev:
 	go build
